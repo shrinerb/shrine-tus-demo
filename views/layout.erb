@@ -1,0 +1,17 @@
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="/assets/bootstrap.js"></script>
+    <script src="/assets/tus.js"></script>
+    <%= assets(:js) %>
+
+    <link href="/assets/bootstrap.css" media="screen" rel="stylesheet">
+    <%= assets(:css) %>
+  </head>
+
+  <body>
+    <div class="container">
+      <%= yield %>
+    </div>
+  </body>
+</html>

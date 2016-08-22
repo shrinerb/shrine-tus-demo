@@ -1,0 +1,11 @@
+<h2><%= movie.name %></h2>
+
+<p>
+  <video type="<%= movie.video.mime_type %>" src="<%= movie.video.url %>" controls></video>
+</p>
+
+<a href="/movies/<%= movie.id %>/edit" class="btn btn-warning">Edit</a>
+<form action="/movies/<%= movie.id %>" method="post" style="display: inline;">
+  <input type="hidden" name="_method" value="delete">
+  <button type="submit" class="btn btn-danger">Delete</button>
+</form>

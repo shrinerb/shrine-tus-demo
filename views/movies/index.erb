@@ -1,0 +1,7 @@
+<h1>Movies</h1>
+
+<a href="/movies/new" class="btn btn-success">+ New Movie</a>
+
+<% @movies.each do |movie| %>
+  <%= partial "movies/movie", locals: {movie: movie} %>
+<% end %>
