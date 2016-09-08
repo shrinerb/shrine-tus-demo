@@ -3,6 +3,11 @@
 This is a demo app for the [tus resumable upload protocol] which integrates
 [tus-ruby-server] with [Shrine] file attachments library.
 
+Once [tus-js-client] uploads the file to [tus-ruby-server], it assigns the
+file URL to the hidden field in form of an uploaded file. Attaching files
+defined by a custom URL is possible because of [shrine-url], which is used as
+the `:cache` storage.
+
 ## Requirements
 
 You need to have the following:
@@ -28,4 +33,6 @@ You need to have the following:
 
 [tus resumable upload protocol]: http://tus.io
 [tus-ruby-server]: https://github.com/janko-m/tus-ruby-server
+[tus-js-client]: https://github.com/tus/tus-js-client
 [Shrine]: https://github.com/janko-m/shrine
+[shrine-url]: https://github.com/janko-m/shrine-url
