@@ -8,6 +8,31 @@ file URL to the hidden field in form of an uploaded file. Attaching files
 defined by a custom URL is possible because of [shrine-url], which is used as
 the `:cache` storage.
 
+```rb
+gem "shrine-url"
+```
+```rb
+Shrine.storages = {
+  cache: Shrine::Storage::Url.new, # we save URLs to files served by the tus server
+  store: Shrine::Storage::YourMainStorage.new(...),
+}
+```
+
+Then in your JavaScript you should assign the URL of the tus file to the `id`
+field of the uploaded file representation, and this way the file uploaded to
+the tus server effectively acts as a cached file, so it can be assigned to the
+hidden attachment field and attached to a model.
+
+```js
+var file = {
+  storage: "cache",
+  id: urlToFile,
+  metadata: {...},
+}
+```
+
+See the [shrine-url] README for info on how this works.
+
 ## Requirements
 
 You need to have the following:
