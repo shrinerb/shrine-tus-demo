@@ -22,8 +22,8 @@ GEM
     roda (2.17.0)
       rack
     sequel (4.37.0)
-    shrine (2.2.0)
-      down (>= 2.3.5)
+    shrine (2.4.1)
+      down (>= 2.3.6)
     shrine-url (0.1.1)
       down (>= 2.3.7)
       shrine (>= 2.0)
