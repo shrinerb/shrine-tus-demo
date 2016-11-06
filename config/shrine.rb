@@ -20,7 +20,6 @@ Shrine.storages = {
 Shrine.plugin :sequel
 Shrine.plugin :logging
 Shrine.plugin :backgrounding
-Shrine.plugin :rack_file
 Shrine.plugin :cached_attachment_data
 
 Shrine::Attacher.promote { |data| PromoteJob.perform_async(data) }
