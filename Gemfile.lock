@@ -17,6 +17,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    puma (3.6.0)
     rack (2.0.1)
     roda (2.17.0)
       rack
@@ -42,6 +43,7 @@ DEPENDENCIES
   aws-sdk (~> 2.1)
   dotenv
   pry
+  puma
   roda (~> 2.15)
   sequel
   shrine
