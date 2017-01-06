@@ -1,13 +1,17 @@
 jQuery(function() {
   $("input[type=file]").on("change", function(e) {
-    var file = e.target.files[0];
-    var fileField = $(e.target)
+    var file      = e.target.files[0],
+        fileField = $(e.target),
+        metadata  = {};
 
     fileField.val("");
 
+    if (file.name != "") { metadata["filename"]     = file.name; }
+    if (file.type != "") { metadata["content_type"] = file.type; }
+
     var upload = new tus.Upload(file, {
       endpoint: "http://localhost:9292/files",
-      metadata: {filename: file.name, content_type: file.type},
+      metadata: metadata,
       onError: function(error) {
         alert(error);
       },
