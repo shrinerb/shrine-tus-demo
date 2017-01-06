@@ -10,7 +10,7 @@ jQuery(function() {
     if (file.type != "") { metadata["content_type"] = file.type; }
 
     var upload = new tus.Upload(file, {
-      endpoint: "http://localhost:9292/files",
+      endpoint: "/files",
       metadata: metadata,
       onError: function(error) {
         alert(error);
