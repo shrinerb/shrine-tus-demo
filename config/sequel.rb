@@ -1,8 +1,12 @@
 require "sequel"
 
-DB = Sequel.sqlite
+if ENV["DATABASE_URL"]
+  DB = Sequel.connect(ENV.fetch("DATABASE_URL"))
+else
+  DB = Sequel.sqlite
+end
 
-DB.create_table :movies do
+DB.create_table! :movies do
   primary_key :id
   column :name, :varchar
   column :video_data, :text
