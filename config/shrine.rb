@@ -5,7 +5,7 @@ require "./jobs/promote_job"
 require "./jobs/delete_job"
 
 require "dotenv"
-Dotenv.load!
+Dotenv.load
 
 Shrine.storages = {
   cache: Shrine::Storage::Url.new,
