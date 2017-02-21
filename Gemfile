@@ -6,7 +6,7 @@ gem "puma"
 gem "tilt"
 
 gem "sequel"
-gem "sqlite3"
+gem "pg"
 
 gem "shrine"
 gem "tus-server"

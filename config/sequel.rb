@@ -3,7 +3,8 @@ require "sequel"
 if ENV["DATABASE_URL"]
   DB = Sequel.connect(ENV.fetch("DATABASE_URL"))
 else
-  DB = Sequel.sqlite
+  system "createdb shrine-tus-demo", err: "/dev/null"
+  DB = Sequel.postgres("shrine-tus-demo")
 end
 
 DB.create_table! :movies do
