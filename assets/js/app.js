@@ -15,7 +15,10 @@ jQuery(function() {
       retryDelays: [0, 1000, 3000, 6000, 10000],
       metadata: metadata,
       onError: function(error) {
-        alert(error);
+        if (error.originalRequest.status == 0) { // no internet connection
+          setTimeout(function() { upload.start() }, 5000);
+        }
+        else alert(error);
       },
       onProgress: function(bytesSent, bytesTotal) {
         var progress = parseInt(bytesSent / bytesTotal * 100, 10);
