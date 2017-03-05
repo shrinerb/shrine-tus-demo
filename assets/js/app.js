@@ -11,7 +11,7 @@ jQuery(function() {
 
     var upload = new tus.Upload(file, {
       endpoint: "/files",
-      chunkSize: 0.5*1024*1204,
+      chunkSize: 0.5*1024*1024,
       retryDelays: [0, 1000, 3000, 6000, 10000],
       metadata: metadata,
       onError: function(error) {
