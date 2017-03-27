@@ -122,17 +122,18 @@ performance implications:
   downloaded before they become available again to serve other requests.
 
 * If you're on Heroku or otherwise have a timeout configured for your workers,
-  the request might time out before the file manages to get fully downloaded.
+  the request might time out before the file manages to get fully downloaded,
+  depending on the size of the file and network conditions.
 
 * If your permanent storage is of the same kind as the tus storage, the file
   can potentially be copied much faster by using features of that storage. For
   example, if both tus server and your app use Amazon S3 storage, you could
   issue a S3 COPY request to the permanent location, thus avoiding having to
-  download and reupload the file.
+  download and re-upload the file.
 
 The simplest approach is to configure the tus storage inside your main app (if
 it's not already), and rely on the common interface of all tus storages. That
-way the code is the same regardless of which storage the tus server uses, and
+way the code is the same regardless of which storage the tus server uses or
 how that storage saves uploaded files.
 
 ```rb
