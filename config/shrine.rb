@@ -7,8 +7,19 @@ require "./jobs/delete_job"
 require "dotenv"
 Dotenv.load
 
+class TusUrl < Shrine::Storage::Url
+  private
+
+  # Make HEAD and DELETE requests work from #exists? and #delete
+  def request(*args)
+    super do |req|
+      req["Tus-Resumable"] = "1.0.0"
+    end
+  end
+end
+
 Shrine.storages = {
-  cache: Shrine::Storage::Url.new,
+  cache: TusUrl.new,
   store: Shrine::Storage::S3.new(
     bucket:             ENV.fetch("S3_BUCKET"),
     region:             ENV.fetch("S3_REGION"),

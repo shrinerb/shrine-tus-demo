@@ -10,7 +10,7 @@ gem "pg"
 
 gem "shrine"
 gem "tus-server", "~> 0.10.0"
-gem "shrine-url", ">= 0.1.1"
+gem "shrine-url", ">= 0.2.1"
 gem "aws-sdk", "~> 2.1"
 gem "dotenv"
 gem "sucker_punch"
