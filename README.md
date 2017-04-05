@@ -280,7 +280,7 @@ into the corresponding object key.
 file_data #=> '{"id":"http://tus-server.org/68db42638388ae645ab747b36a837a79", "storage":"cache", "metadata":{...}}'
 parsed_file_data = JSON.parse(file_data)
 
-tus_uid = parsed_file_data["id"].split("/").last
+tus_id = parsed_file_data["id"].split("/").last
 parsed_file_data["id"] = tus_id
 
 file_data = parsed_file_data.to_json
