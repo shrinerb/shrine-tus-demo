@@ -249,7 +249,7 @@ parsed_file_data = JSON.parse(file_data)
 
 tus_uid = parsed_file_data["id"].split("/").last
 bucket = Shrine.storages[:cache].bucket
-file_info = bucket.files_collection.find(filename: tus_id).limit(1).first
+file_info = bucket.files_collection.find(filename: tus_uid).limit(1).first
 parsed_file_data["id"] = file_info[:_id].to_s
 
 file_data = parsed_file_data.to_json
@@ -281,7 +281,7 @@ file_data #=> '{"id":"http://tus-server.org/68db42638388ae645ab747b36a837a79", "
 parsed_file_data = JSON.parse(file_data)
 
 tus_uid = parsed_file_data["id"].split("/").last
-parsed_file_data["id"] = tus_id
+parsed_file_data["id"] = tus_uid
 
 file_data = parsed_file_data.to_json
 file_data #=> '{"id":"68db42638388ae645ab747b36a837a79", "storage":"cache", "metadata":{...}}'
