@@ -186,6 +186,14 @@ permanent storage than the one the tus server uses. But if you're using the
 You would just need switch the `:cache` storage to the corresponding tus
 storage, and translate upload requests to that storage.
 
+```rb
+# in your controller
+
+file_data = params["movie"]["video"]
+# ... transform `file_data` with one of the strategies below ...
+Movie.create(params["movie"].merge("video" => file_data))
+```
+
 #### FileSystem
 
 ```rb
