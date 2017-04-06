@@ -25,7 +25,7 @@ Since tus-ruby-server is only meant to be a temporary storage, after
 tus-js-client uploads the file to tus-ruby-server, we need to move the uploaded
 file to a permanent storage.
 
-### Downloading through the tus server
+### Option A: Downloading through the tus server
 
 The simplest option is to assign the tus URL as the cached file, using
 [shrine-url] as the `:cache` storage.
@@ -107,9 +107,9 @@ class TusUrl < Shrine::Storage::Url
 end
 ```
 
-### Downloading directly from the storage
+### Option B: Downloading directly from the storage
 
-While the approach above is simple and agnostic to the implemetation of the tus
+While option **A** is simple and agnostic to the implemetation of the tus
 server, downloading the uploaded file through the tus server has some
 performance implications:
 
@@ -121,9 +121,10 @@ performance implications:
   tus-ruby-server, because its workers need to wait until the whole file is
   downloaded before they become available again to serve other requests.
 
-* If you're on Heroku or otherwise have a timeout configured for your workers,
-  the request might time out before the file manages to get fully downloaded,
-  depending on the size of the file and network conditions.
+* If tus-ruby-server is hosted on Heroku or otherwise its web server has a
+  request timeout configured, the request might time out before the file
+  manages to get fully downloaded, depending on the size of the file and
+  network conditions.
 
 * If your permanent storage is of the same kind as the tus storage, the file
   can potentially be copied much faster by using features of that storage. For
@@ -180,21 +181,66 @@ end
 Note that for filesystem storage this will only work if the tus server and your
 main app share the same disk.
 
-This approach is probably the best if you're using a different kind of
-permanent storage than the one the tus server uses. But if you're using the
-**same kind of permanent storage**, you can optimize the transfer much more.
-You would just need switch the `:cache` storage to the corresponding tus
-storage, and translate upload requests to that storage.
+### Option C: Utilizing storage-specific optimizations
+
+Option **B** is probably best in terms of performance if you're using a
+different kind of permanent storage than the one tus-ruby-server uses. But if
+you intend to use the **same kind of permanent storage as tus-ruby-server
+uses**, you can optimize the file transfer from tus storage to permanent Shrine
+storage even more by utilizing storage-specific optimizations that Shrine
+storages have built-in.
+
+This can be achieved by defining your temporary Shrine storage, instead of
+being `Shrine::Storage::Url` like in options **A** and **B**, to be the same as
+the storage that tus-ruby-server uses. So, if your tus-ruby-server is configured
+with either of the following storages:
 
 ```rb
-# in your controller
-
-file_data = params["movie"]["video"]
-# ... transform `file_data` with one of the strategies below ...
-Movie.create(params["movie"].merge("video" => file_data))
+Tus::Server.opts[:storage] = Tus::Storage::Filesystem.new("data")
+Tus::Server.opts[:storage] = Tus::Storage::Gridfs.new(client: mongo, prefix: "tus")
+Tus::Server.opts[:storage] = Tus::Storage::S3.new(prefix: "tus", **s3_options)
 ```
 
-#### FileSystem
+Your Shrine temporary storage is configured with either of the following
+storages:
+
+```b
+Shrine.storages[:cache] = Shrine::Storage::FileSystem.new("data")
+Shrine.storages[:cache] = Shrine::Storage::Gridfs.new(client: mongo, prefix: "tus")
+Shrine.storages[:cache] = Shrine::Storage::S3.new(prefix: "tus", **s3_options)
+```
+
+On the client-side, once the file has finished uploading to your tus server,
+you can continue sending the tus file data in the same format as if you were
+using `Shrine::Storage::Url` as temporary Shrine storage (the same as in
+options **A** and **B**):
+
+```rb
+{
+  "id": "http://tus-server.org/96955a2864634ec2df84ce83d2013d66",
+  "storage": "cache",
+  "metadata": {
+    "mime_type" => "video/mpeg",
+    "filename" => "myvideo.mp4",
+    "size" => 580598712
+  }
+}
+```
+
+Once this JSON data is submitted to your app, you need to transform the `id`
+field into an identifier that your temporary Shrine storage will recognize.
+
+```rb
+movie_params = params["movie"]
+file_data = JSON.parse(movie_params["video"])
+tus_uid = file_data["id"].split("/").last
+# ... transform `file_data` depending on the storage, see below ...
+Movie.create(movie_params.merge("video" => file_data.to_json))
+```
+
+How you need to transform the `id` field depends on the storage you're using:
+
+#### File System
 
 ```rb
 require "shrine/storage/file_system"
@@ -210,14 +256,11 @@ in your application you need to translate the tus URL sent by the client into
 the correct file ID.
 
 ```rb
-file_data #=> '{"id":"http://tus-server.org/68db42638388ae645ab747b36a837a79", "storage":"cache", "metadata":{...}}'
-parsed_file_data = JSON.parse(file_data)
-
-tus_uid = parsed_file_data["id"].split("/").last
+# ...
+file_data #=> {"id" => "http://tus-server.org/68db42638388ae645ab747b36a837a79", ...}
 parsed_file_data["id"] = "#{tus_uid}.file"
-
-file_data = parsed_file_data.to_json
-file_data #=> '{"id":"68db42638388ae645ab747b36a837a79.file", "storage":"cache", "metadata":{...}}'
+file_data #=> {"id" => "68db42638388ae645ab747b36a837a79.file", ...}
+# ...
 ```
 
 So far this will have the same performance as the generic version, because the
@@ -229,7 +272,7 @@ which is instantaneous regardless of the filesize.
 Shrine.plugin :moving
 ```
 
-#### MongoDB Gridfs
+#### MongoDB GridFS
 
 ```rb
 gem "shrine-gridfs"
@@ -252,16 +295,12 @@ for transformation of tus URL to Gridfs ID just requires the extra step of
 finding the `_id` by `filename`.
 
 ```rb
-file_data #=> '{"id":"http://tus-server.org/68db42638388ae645ab747b36a837a79", "storage":"cache", "metadata":{...}}'
-parsed_file_data = JSON.parse(file_data)
-
-tus_uid = parsed_file_data["id"].split("/").last
-bucket = Shrine.storages[:cache].bucket
-file_info = bucket.files_collection.find(filename: tus_uid).limit(1).first
-parsed_file_data["id"] = file_info[:_id].to_s
-
-file_data = parsed_file_data.to_json
-file_data #=> '{"id":"58d8d186c389e010d9e350b5", "storage":"cache", "metadata":{...}}'
+# ...
+file_data #=> {"id" => "http://tus-server.org/68db42638388ae645ab747b36a837a79", ...}
+grid_info = Shrine.storages[:cache].bucket.find(filename: tus_uid).limit(1).first
+file_data["id"] = grid_info[:_id].to_s
+file_data #=> {"id" => "58d8d186c389e010d9e350b5", ...}
+# ...
 ```
 
 MongoDB doesn't support moving documents between different collections
@@ -285,14 +324,11 @@ so it's easy to translate the tus URL from attachment data sent by the client
 into the corresponding object key.
 
 ```rb
-file_data #=> '{"id":"http://tus-server.org/68db42638388ae645ab747b36a837a79", "storage":"cache", "metadata":{...}}'
-parsed_file_data = JSON.parse(file_data)
-
-tus_uid = parsed_file_data["id"].split("/").last
-parsed_file_data["id"] = tus_uid
-
-file_data = parsed_file_data.to_json
-file_data #=> '{"id":"68db42638388ae645ab747b36a837a79", "storage":"cache", "metadata":{...}}'
+# ...
+file_data #=> {"id" => "http://tus-server.org/68db42638388ae645ab747b36a837a79", ...}
+file_data["id"] = tus_id
+file_data #=> {"id" => "68db42638388ae645ab747b36a837a79.file", ...}
+# ...
 ```
 
 When `Shrine::Storage::S3` detects that both source and destination storage are
