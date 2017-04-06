@@ -258,7 +258,7 @@ the correct file ID.
 ```rb
 # ...
 file_data #=> {"id" => "http://tus-server.org/68db42638388ae645ab747b36a837a79", ...}
-parsed_file_data["id"] = "#{tus_uid}.file"
+file_data["id"] = "#{tus_uid}.file"
 file_data #=> {"id" => "68db42638388ae645ab747b36a837a79.file", ...}
 # ...
 ```
