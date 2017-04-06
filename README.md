@@ -246,7 +246,7 @@ How you need to transform the `id` field depends on the storage you're using:
 require "shrine/storage/file_system"
 
 Shrine.storages = {
-  cache: Shrine::Storage::FileSystem.new("data"), # matches the tus storage
+  cache: Shrine::Storage::FileSystem.new("data"), # has to match tus storage
   store: Shrine::Storage::FileSystem.new("public", prefix: "uploads/store"),
 }
 ```
@@ -283,7 +283,7 @@ require "shrine/storage/gridfs"
 client = Mongo::Client.new("mongodb://127.0.0.1:27017/mydb", logger: Logger.new(nil))
 
 Shrine.storages = {
-  cache: Shrine::Storage::Gridfs.new(client: client, prefix: "fs_temp"), # matches the tus storage
+  cache: Shrine::Storage::Gridfs.new(client: client, prefix: "tus"), # has to match tus storage
   store: Shrine::Storage::Gridfs.new(client: client),
 }
 ```
@@ -314,7 +314,7 @@ also Gridfs.
 require "shrine/storage/s3"
 
 Shrine.storages = {
-  cache: Shrine::Storage::S3.new(prefix: "cache", **s3_options), # matches the tus storage
+  cache: Shrine::Storage::S3.new(prefix: "tus", **s3_options), # has to match tus storage
   store: Shrine::Storage::S3.new(prefix: "store", **s3_options),
 }
 ```
