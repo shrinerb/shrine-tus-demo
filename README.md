@@ -204,7 +204,7 @@ Tus::Server.opts[:storage] = Tus::Storage::S3.new(prefix: "tus", **s3_options)
 Your Shrine temporary storage is configured with either of the following
 storages:
 
-```b
+```rb
 Shrine.storages[:cache] = Shrine::Storage::FileSystem.new("data")
 Shrine.storages[:cache] = Shrine::Storage::Gridfs.new(client: mongo, prefix: "tus")
 Shrine.storages[:cache] = Shrine::Storage::S3.new(prefix: "tus", **s3_options)
