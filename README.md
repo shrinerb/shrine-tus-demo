@@ -250,10 +250,10 @@ end
   than 100MB, while files 100MB or larger will be divided into multiple chunks
   which will be copied individually and in parallel using S3's multipart API.
 
-Note that it's not recommended to use the `delete_promoted` Shrine plugin with
-this approach, because depending on the tus storage implementation it could
-cause HEAD requests to `tus-ruby-server` to return a success for files that
-were deleted by Shrine.
+Note that it's **not** recommended to use the `delete_promoted` Shrine plugin
+with this approach, because depending on the tus storage implementation it
+could cause HEAD requests to `tus-ruby-server` to return a success for files
+that were deleted by Shrine.
 
 [tus resumable upload protocol]: http://tus.io
 [tus-ruby-server]: https://github.com/janko-m/tus-ruby-server
