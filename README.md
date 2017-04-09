@@ -99,7 +99,7 @@ use `tus-ruby-server` for.
 
 ```rb
 gem "shrine-tus"
-gem "shrine-url", ">= 0.3" # dependency of Shrine::Storage::Tus
+gem "shrine-url", "~> 0.3" # dependency of Shrine::Storage::Tus
 ```
 ```rb
 require "shrine/storage/tus"
@@ -161,7 +161,7 @@ need to give it the tus storage instance.
 
 ```rb
 gem "shrine-tus"
-gem "shrine-url", ">= 0.3" # dependency of Shrine::Storage::Tus
+gem "shrine-url", "~> 0.3" # dependency of Shrine::Storage::Tus
 ```
 ```rb
 require "shrine/storage/tus"
