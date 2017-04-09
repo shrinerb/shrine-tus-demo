@@ -235,7 +235,7 @@ end
 ```
 
 * `Shrine::Storage::FileSystem` will have roughly the same performance as in
-  option **B**, but if `moving` Shrine plugin is loaded, Shrine will execute a
+  option **B**, but if you also load the `moving` plugin, Shrine will execute a
   `mv` command between the tus storage and permanent storage, which is
   instantaneous regardless of the filesize.
 
