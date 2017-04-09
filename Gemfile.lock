@@ -25,7 +25,8 @@ GEM
     sequel (4.37.0)
     shrine (2.5.0)
       down (>= 2.3.6)
-    shrine-url (0.2.1)
+    shrine-tus (0.1.0)
+    shrine-url (0.3.1)
       down (>= 2.3.7)
       shrine (>= 2.0)
     slop (3.6.0)
@@ -47,10 +48,11 @@ DEPENDENCIES
   roda (~> 2.15)
   sequel
   shrine
-  shrine-url (>= 0.2.1)
+  shrine-tus (~> 0.1)
+  shrine-url (~> 0.3)
   sucker_punch
   tilt
-  tus-server (~> 0.10.0)
+  tus-server (~> 0.10)
 
 BUNDLED WITH
    1.13.2

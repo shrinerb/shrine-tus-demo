@@ -28,9 +28,10 @@ jQuery(function() {
       onSuccess: function(result) {
         progressBar.remove();
 
+        // custruct uploaded file data in the Shrine attachment format
         var file = {
-          storage: "cache",
           id: upload.url,
+          storage: "cache",
           metadata: {
             filename:  upload.file.name.match(/[^\/\\]+$/)[0], // IE returns full path
             size:      upload.file.size,
@@ -38,6 +39,8 @@ jQuery(function() {
           }
         }
 
+        // save the JSON data to the attachment form field, so that it's
+        // submitted and assigned as the Shrine attachment
         fileField.prev().val(JSON.stringify(file));
         fileField.after($('<p>' + upload.url + '</p>'));
       }

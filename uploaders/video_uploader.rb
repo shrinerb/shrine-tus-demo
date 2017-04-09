@@ -1,6 +1,5 @@
 require "./config/shrine"
 
 class VideoUploader < Shrine
-  plugin :determine_mime_type
-  plugin :delete_promoted
+  storages[:cache] = storages[:tus] # use Shrine::Storage::Tus as temporary storage
 end
