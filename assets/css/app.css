@@ -1,3 +1,7 @@
 .container {
   width: 800px;
 }
+
+.templates {
+  visibility: hidden;
+}

@@ -37,7 +37,7 @@ format, so that it can be attached to the record. This is how you can construct
 it using the `tus.Upload` JavaScript object from `tus-js-client`:
 
 ```js
-var file_data = {
+var fileData = {
   id: upload.url,
   storage: "cache",
   metadata: {
@@ -45,7 +45,7 @@ var file_data = {
     size:      upload.file.size,
     mime_type: upload.file.type,
   }
-}
+};
 ```
 
 Then you can either assign that to a hidden field and have it submitted when

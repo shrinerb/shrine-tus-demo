@@ -1,7 +1,11 @@
 <h2><%= movie.name %></h2>
 
 <p>
-  <video type="<%= movie.video.mime_type %>" src="<%= movie.video.url %>" width=600 controls></video>
+  <% if movie.video %>
+    <video type="<%= movie.video.mime_type %>" src="<%= movie.video.url %>" width=600 controls></video>
+  <% else %>
+    No video attached
+  <% end %>
 </p>
 
 <a href="/movies/<%= movie.id %>/edit" class="btn btn-warning">Edit</a>

@@ -1,53 +1,69 @@
-jQuery(function() {
-  $("input[type=file]").on("change", function(e) {
-    var file      = e.target.files[0],
-        fileField = $(e.target),
-        metadata  = {};
+Object.assign(tus.defaultOptions, {
+  endpoint: "/files",
+  retryDelays: [0, 1000, 3000, 6000, 10000],
+});
 
-    fileField.val("");
+document.querySelectorAll("input[type=file]").forEach(function(fileInput) {
+  fileInput.addEventListener("change", function() {
+    for (var i = 0; i < fileInput.files.length; i++) {
+      var file = fileInput.files[i],
+          progressBar = document.querySelector(".progress").cloneNode(true),
+          metadata = {};
 
-    if (file.name != "") { metadata["filename"]     = file.name; }
-    if (file.type != "") { metadata["content_type"] = file.type; }
+      fileInput.parentNode.insertBefore(progressBar, fileInput);
 
-    var upload = new tus.Upload(file, {
-      endpoint: "/files",
-      chunkSize: 0.5*1024*1024,
-      retryDelays: [0, 1000, 3000, 6000, 10000],
-      metadata: metadata,
-      onError: function(error) {
-        if (error.originalRequest.status == 0) { // no internet connection
-          setTimeout(function() { upload.start() }, 5000);
-        }
-        else alert(error);
-      },
-      onProgress: function(bytesSent, bytesTotal) {
+      if (file.name != "") { metadata["filename"]     = file.name; }
+      if (file.type != "") { metadata["content_type"] = file.type; }
+
+      var upload = new tus.Upload(file, {
+        chunkSize: 0.5*1024*1024,
+        metadata: metadata,
+      });
+
+      upload.options.onProgress = function(bytesSent, bytesTotal) {
         var progress = parseInt(bytesSent / bytesTotal * 100, 10);
         var percentage = progress.toString() + '%';
-        progressBar.find(".progress-bar").css("width", percentage).html(percentage);
-      },
-      onSuccess: function(result) {
-        progressBar.remove();
+        progressBar.querySelector(".progress-bar").style = "width: " + percentage;
+        progressBar.querySelector(".progress-bar").innerHTML = percentage;
+      };
+
+      upload.options.onSuccess = function(result) {
+        fileInput.parentNode.removeChild(progressBar);
 
         // custruct uploaded file data in the Shrine attachment format
-        var file = {
+        var fileData = {
           id: upload.url,
           storage: "cache",
           metadata: {
-            filename:  upload.file.name.match(/[^\/\\]+$/)[0], // IE returns full path
-            size:      upload.file.size,
-            mime_type: upload.file.type,
+            filename:  file.name.match(/[^\/\\]+$/)[0], // IE returns full path
+            size:      file.size,
+            mime_type: file.type,
           }
+        };
+
+        // assign file data to the hidden field so that it's submitted to the app
+        var hiddenInput = fileInput.parentNode.querySelector("input[type=hidden]");
+        hiddenInput.value = JSON.stringify(fileData);
+
+        urlElement = document.createElement("p");
+        urlElement.innerHTML = upload.url;
+        fileInput.parentNode.insertBefore(urlElement, fileInput.nextSibling);
+      };
+
+      upload.options.onError = function(error) {
+        if (error.originalRequest.status == 0) { // no internet connection
+          setTimeout(function() { upload.start() }, 5000);
         }
+        else {
+          alert(error);
+        }
+      };
 
-        // save the JSON data to the attachment form field, so that it's
-        // submitted and assigned as the Shrine attachment
-        fileField.prev().val(JSON.stringify(file));
-        fileField.after($('<p>' + upload.url + '</p>'));
-      }
-    });
+      // start the tus upload
+      upload.start();
+    };
 
-    var progressBar = $('<div class="progress" style="width: 300px"><div class="progress-bar"></div></div>').insertBefore(e.target);
-
-    upload.start();
-  })
+    // remove selected files
+    fileInput.value = "";
+  });
 });
