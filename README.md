@@ -234,6 +234,11 @@ class VideoUploader < Shrine
 end
 ```
 
+Note that this approach doesn't use `Shrine::Storage::Tus`, so you don't need
+to add `shrine-url` to your Gemfile.
+
+These are the performance advantages for each storage:
+
 * `Shrine::Storage::FileSystem` will have roughly the same performance as in
   option **B**, but if you also load the `moving` plugin, Shrine will execute a
   `mv` command between the tus storage and permanent storage, which is
@@ -244,7 +249,7 @@ end
   ```
 
 * `Shrine::Storage::Gridfs` will use more efficient copying, resulting in a
-  2x speedup in my benchmarks.
+  2x speedup according to my benchmarks.
 
 * `Shrine::Storage::S3` will issue a single S3 COPY request for files smaller
   than 100MB, while files 100MB or larger will be divided into multiple chunks
