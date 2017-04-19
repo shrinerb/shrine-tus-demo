@@ -20,7 +20,7 @@ GEM
       slop (~> 3.4)
     puma (3.6.0)
     rack (2.0.1)
-    roda (2.24.0)
+    roda (2.25.0)
       rack
     sequel (4.37.0)
     shrine (2.5.0)
@@ -33,7 +33,7 @@ GEM
     sucker_punch (2.0.1)
       concurrent-ruby (~> 1.0.0)
     tilt (2.0.5)
-    tus-server (0.10.0)
+    tus-server (0.10.2)
       roda (~> 2.19)
 
 PLATFORMS
@@ -52,7 +52,7 @@ DEPENDENCIES
   shrine-url (~> 0.3)
   sucker_punch
   tilt
-  tus-server (~> 0.10)
+  tus-server (>= 0.10.2, < 1)
 
 BUNDLED WITH
    1.13.2

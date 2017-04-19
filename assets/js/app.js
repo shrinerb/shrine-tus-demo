@@ -7,17 +7,16 @@ document.querySelectorAll("input[type=file]").forEach(function(fileInput) {
   fileInput.addEventListener("change", function() {
     for (var i = 0; i < fileInput.files.length; i++) {
       var file = fileInput.files[i],
-          progressBar = document.querySelector(".progress").cloneNode(true),
-          metadata = {};
+          progressBar = document.querySelector(".progress").cloneNode(true);
 
       fileInput.parentNode.insertBefore(progressBar, fileInput);
 
-      if (file.name != "") { metadata["filename"]     = file.name; }
-      if (file.type != "") { metadata["content_type"] = file.type; }
-
       var upload = new tus.Upload(file, {
         chunkSize: 0.5*1024*1024,
-        metadata: metadata,
+        metadata: {
+          "filename":     file.name,
+          "content_type": file.type,
+        },
       });
 
       upload.options.onProgress = function(bytesSent, bytesTotal) {

@@ -9,7 +9,7 @@ gem "sequel"
 gem "pg"
 
 gem "shrine"
-gem "tus-server", "~> 0.10"
+gem "tus-server", ">= 0.10.2", "< 1"
 gem "shrine-tus", "~> 0.1"
 gem "shrine-url", "~> 0.3"
 gem "aws-sdk", "~> 2.1"
