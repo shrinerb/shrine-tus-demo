@@ -14,8 +14,8 @@ document.querySelectorAll("input[type=file]").forEach(function(fileInput) {
       var upload = new tus.Upload(file, {
         chunkSize: 0.5*1024*1024,
         metadata: {
-          "filename":     file.name,
-          "content_type": file.type,
+          "filename":     file.name, // for "Content-Type"
+          "content_type": file.type, // for "Content-Disposition"
         },
       });
 
