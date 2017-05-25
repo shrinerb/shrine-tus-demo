@@ -1,12 +1,14 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    aws-sdk (2.4.4)
-      aws-sdk-resources (= 2.4.4)
-    aws-sdk-core (2.4.4)
+    aws-sdk (2.9.24)
+      aws-sdk-resources (= 2.9.24)
+    aws-sdk-core (2.9.24)
+      aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.4.4)
-      aws-sdk-core (= 2.4.4)
+    aws-sdk-resources (2.9.24)
+      aws-sdk-core (= 2.9.24)
+    aws-sigv4 (1.0.0)
     coderay (1.1.1)
     concurrent-ruby (1.0.2)
     dotenv (2.1.1)
@@ -40,7 +42,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  aws-sdk (~> 2.1)
+  aws-sdk (~> 2.9)
   dotenv
   pg
   pry
@@ -55,4 +57,4 @@ DEPENDENCIES
   tus-server (>= 0.10.2, < 1)
 
 BUNDLED WITH
-   1.13.2
+   1.14.6
