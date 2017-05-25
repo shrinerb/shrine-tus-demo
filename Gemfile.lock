@@ -12,7 +12,7 @@ GEM
     coderay (1.1.1)
     concurrent-ruby (1.0.2)
     dotenv (2.1.1)
-    down (2.4.2)
+    down (3.0.0)
     jmespath (1.3.1)
     method_source (0.8.2)
     pg (0.19.0)
@@ -24,8 +24,9 @@ GEM
     rack (2.0.1)
     roda (2.25.0)
       rack
+    ruby-prof (0.16.2)
     sequel (4.37.0)
-    shrine (2.5.0)
+    shrine (2.6.1)
       down (>= 2.3.6)
     shrine-tus (0.1.0)
     shrine-url (0.3.1)
@@ -48,6 +49,7 @@ DEPENDENCIES
   pry
   puma
   roda (~> 2.15)
+  ruby-prof
   sequel
   shrine
   shrine-tus (~> 0.1)

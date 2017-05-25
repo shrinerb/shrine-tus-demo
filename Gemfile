@@ -15,5 +15,6 @@ gem "shrine-url", "~> 0.3"
 gem "aws-sdk", "~> 2.9"
 gem "dotenv"
 gem "sucker_punch"
+gem "ruby-prof"
 
 gem "pry"
