@@ -1,5 +1,4 @@
-require "./config/shrine"
+require "./uploads/tus_uploader"
 
-class VideoUploader < Shrine
-  storages[:cache] = storages[:tus] # use Shrine::Storage::Tus as temporary storage
+class VideoUploader < TusUploader
 end
