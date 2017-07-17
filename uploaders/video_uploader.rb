@@ -1,4 +1,4 @@
-require "./uploads/tus_uploader"
+require "./uploaders/tus_uploader"
 
 class VideoUploader < TusUploader
 end

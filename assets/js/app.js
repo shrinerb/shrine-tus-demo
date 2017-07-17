@@ -1,5 +1,5 @@
 Object.assign(tus.defaultOptions, {
-  endpoint: "/files",
+  endpoint: "http://localhost:9000/",
   retryDelays: [0, 1000, 3000, 6000, 10000],
 });
 
@@ -12,7 +12,6 @@ document.querySelectorAll("input[type=file]").forEach(function(fileInput) {
       fileInput.parentNode.insertBefore(progressBar, fileInput);
 
       var upload = new tus.Upload(file, {
-        chunkSize: 0.5*1024*1024,
         metadata: {
           "filename":     file.name, // for "Content-Type"
           "content_type": file.type, // for "Content-Disposition"
