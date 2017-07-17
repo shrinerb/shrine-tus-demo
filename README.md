@@ -5,19 +5,11 @@ This is a demo app for the [tus resumable upload protocol], which integrates
 
 ## Setup
 
-* Add .env with your Amazon S3 credentials:
-
-  ```sh
-  # .env
-  S3_BUCKET="..."
-  S3_REGION="..."
-  S3_ACCESS_KEY_ID="..."
-  S3_SECRET_ACCESS_KEY="..."
-  ```
-
 * Run `bundle install`
 
-* Run `bundle exec rackup`
+* Run `gem install foreman`
+
+* Run `foreman start`
 
 ## Integration
 
