@@ -6,10 +6,11 @@ This is a demo app for the [tus resumable upload protocol], which integrates
 ## Setup
 
 * Run `bundle install`
-
 * Run `gem install foreman`
-
 * Run `foreman start`
+
+This will start a Puma process which runs the main app (`app.rb`), and an
+EventMachine/Goliath process which runs the `tus-ruby-server` (`tus.rb`).
 
 ## Integration
 

@@ -25,6 +25,8 @@ GEM
       rack (>= 1.2.2)
       rack-contrib
       rack-respond_to
+    goliath-rack_proxy (0.1.1)
+      goliath (>= 1.0.5, < 2)
     http_parser.rb (0.6.0)
     log4r (1.1.10)
     multi_json (1.12.1)
@@ -33,8 +35,8 @@ GEM
     puma (3.6.0)
     rack (1.6.8)
     rack-accept-media-types (0.9)
-    rack-contrib (1.2.0)
-      rack (>= 0.9.1)
+    rack-contrib (1.5.0)
+      rack (~> 1.4)
     rack-respond_to (0.9.8)
       rack-accept-media-types (>= 0.6)
     roda (2.25.0)
@@ -50,15 +52,14 @@ GEM
       down (~> 4.0)
       shrine (>= 2.0)
     tilt (2.0.5)
-    tus-server (1.0.0)
+    tus-server (1.1.1)
       roda (~> 2.19)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  async-rack (>= 0.5.1)
-  goliath
+  goliath-rack_proxy (>= 0.1.1)
   pg
   puma
   roda (~> 2.15)
