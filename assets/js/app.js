@@ -13,8 +13,8 @@ document.querySelectorAll("input[type=file]").forEach(function(fileInput) {
 
       var upload = new tus.Upload(file, {
         metadata: {
-          "filename":     file.name, // for "Content-Type"
-          "content_type": file.type, // for "Content-Disposition"
+          "filename":     file.name.match(/[^\/\\]+$/)[0], // for "Content-Disposition"
+          "content_type": file.type,                       // for "Content-Type"
         },
       });
 
