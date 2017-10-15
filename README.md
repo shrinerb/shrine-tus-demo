@@ -26,6 +26,8 @@ gem "tus-server", "~> 1.0" # HTTP API for tus resumable upload protocol
 gem "shrine-tus", "~> 1.0" # Glue between Shrine and tus-server
 ```
 
+#### Standalone (Goliath)
+
 In this demo the `tus-ruby-server` is run as a separate process, so that it
 can use the [Goliath] web server which has full streaming support. It uses
 Goliath via the [goliath-rack_proxy] gem, so if you want to use the same
@@ -37,6 +39,7 @@ setup in your app you'll also need to add this gem to the Gemfile:
 gem "goliath-rack_proxy"
 ```
 ```rb
+# tus.rb
 require "tus/server"
 require "goliath/rack_proxy"
 
@@ -46,8 +49,14 @@ class TusApp < Goliath::RackProxy
 end
 ```
 
-However, you can also run `tus-ruby-server` alongside your main application, in
-the same way that you would run any other Rack application:
+If you run that file via `ruby tus.rb`, it will start a Goliath server on
+`localhost:9000`, which you can later set as the `:endpoint` option for
+tus-js-client.
+
+#### Mounted
+
+You can also run `tus-ruby-server` alongside your main application, in the same
+way that you would run any other Rack application:
 
 ```rb
 # config.ru (Rack)
