@@ -36,7 +36,7 @@ setup in your app you'll also need to add this gem to the Gemfile:
 ```rb
 # Gemfile
 # ...
-gem "goliath-rack_proxy"
+gem "goliath-rack_proxy", "~> 1.0"
 ```
 ```rb
 # tus.rb
