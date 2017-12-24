@@ -40,7 +40,7 @@ class ShrineTusDemo < Roda
         r.redirect "/movies"
       end
 
-      r.on ":id" do |id|
+      r.on Integer do |id|
         @movie = Movie[id]
 
         r.get "edit" do

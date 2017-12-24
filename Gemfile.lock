@@ -5,7 +5,7 @@ GEM
       public_suffix (>= 2.0.2, < 4.0)
     async-rack (0.5.1)
       rack (~> 1.1)
-    down (4.0.1)
+    down (4.2.0)
     einhorn (0.7.4)
     em-synchrony (1.0.6)
       eventmachine (>= 1.0.0.beta.1)
@@ -39,21 +39,21 @@ GEM
       rack (~> 1.4)
     rack-respond_to (0.9.8)
       rack-accept-media-types (>= 0.6)
-    roda (2.25.0)
+    roda (3.3.0)
       rack
     sequel (4.37.0)
-    shrine (2.6.1)
-      down (>= 2.3.6)
-    shrine-tus (1.0.0)
+    shrine (2.8.0)
+      down (~> 4.1)
+    shrine-tus (1.1.0)
       shrine (~> 2.0)
       shrine-url (~> 1.0)
-      tus-server (~> 1.0)
-    shrine-url (1.0.0)
+      tus-server (~> 2.0)
+    shrine-url (1.0.2)
       down (~> 4.0)
       shrine (>= 2.0)
     tilt (2.0.5)
-    tus-server (1.1.1)
-      roda (~> 2.19)
+    tus-server (2.0.2)
+      roda (>= 2.27, < 4)
 
 PLATFORMS
   ruby
@@ -62,12 +62,12 @@ DEPENDENCIES
   goliath-rack_proxy (~> 1.0)
   pg
   puma
-  roda (~> 2.15)
+  roda (~> 3.0)
   sequel
   shrine (~> 2.0)
-  shrine-tus (~> 1.0)
+  shrine-tus (~> 1.1)
   tilt
-  tus-server (~> 1.0)
+  tus-server (>= 2.0.2, < 3)
 
 BUNDLED WITH
-   1.16.0.pre.2
+   1.16.0
