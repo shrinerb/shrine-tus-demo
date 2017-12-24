@@ -1,26 +1,23 @@
 <h2><%= movie.name || "New Movie" %></h2>
 
-<% if movie.new? %>
-<form action="/movies" method="post" enctype="multipart/form-data">
-<% else %>
-<form action="/movies/<%= movie.id %>" method="post" enctype="multipart/form-data">
-  <input type="hidden" name="_method" value="put">
-<% end %>
+<% action = movie.new? ? "/movies" : "movies/#{movie.id}" %>
+<% method = movie.new? ? "post"    : "put" %>
+
+<form action="<%= action %>" method="post" enctype="multipart/form-data">
+  <input type="hidden" name="_method" value="<%= method %>">
   <div class="form-group">
     <label for="movie-name">Name</label>
     <input type="text" name="movie[name]" class="form-control" id="movie-name" placeholder="Name" value="<%= movie.name %>">
   </div>
   <div class="form-group">
     <label for="movie-video">Video</label>
-    <p><a href="<%= movie.video_url %>"><%= movie.video_url(public: true) %></a></p>
     <input type="hidden" name="movie[video]" value="<%= movie.cached_video_data %>">
-    <input type="file" name="movie[video]" id="movie-video">
+    <div class="uppy-file-input">
+      <input type="file" name="movie[video]" id="movie-video">
+    </div>
+    <div class="video-preview">
+      <a href="<%= movie.video_url %>"><%= movie.video_url(public: true) %></a>
+    </div>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
-
-<div class="templates">
-  <div class="progress" style="width: 300px">
-    <div class="progress-bar"></div>
-  </div>
-</div>
