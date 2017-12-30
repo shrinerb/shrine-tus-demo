@@ -11,13 +11,11 @@
   </div>
   <div class="form-group">
     <label for="movie-video">Video</label>
-    <input type="hidden" name="movie[video]" value="<%= movie.cached_video_data %>">
-    <div class="uppy-file-input">
-      <input type="file" name="movie[video]" id="movie-video">
-    </div>
-    <div class="video-preview">
-      <a href="<%= movie.video_url %>"><%= movie.video_url(public: true) %></a>
-    </div>
+    <input type="hidden" name="movie[video]" value="<%= movie.cached_video_data %>" id="movie-video-upload-result">
+    <input type="file" name="movie[video]" id="movie-video-field" data-upload-result-element="movie-video-upload-result" data-preview-element="movie-video-preview">
+  </div>
+  <div class="video-preview">
+    <a href="<%= movie.video_url %>" id="movie-video-preview"><%= movie.video_url(public: true) %></a>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>

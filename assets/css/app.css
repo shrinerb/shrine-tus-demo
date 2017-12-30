@@ -1,3 +1,7 @@
 .container {
   width: 800px;
 }
+
+.video-preview {
+  margin-bottom: 10px;
+}
