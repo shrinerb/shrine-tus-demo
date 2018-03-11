@@ -190,11 +190,11 @@ For various options regarding integrating Shrine and tus-ruby-server see the
 [tus resumable upload protocol]: http://tus.io
 [tus-ruby-server]: https://github.com/janko-m/tus-ruby-server
 [tus-js-client]: https://github.com/tus/tus-js-client
-[Shrine]: https://github.com/janko-m/shrine
-[shrine-tus]: https://github.com/janko-m/shrine-tus
+[Shrine]: https://github.com/shrinerb/shrine
+[shrine-tus]: https://github.com/shrinerb/shrine-tus
 [Goliath]: https://github.com/postrank-labs/goliath
 [goliath-rack_proxy]: https://github.com/janko-m/goliath-rack_proxy
-[Approach A]: https://github.com/janko-m/shrine-tus/blob/552a96ce4e065f6d95f4077441eca93488e85482/README.md#approach-a-downloading-through-tus-server
+[Approach A]: https://github.com/shrinerb/shrine-tus/blob/552a96ce4e065f6d95f4077441eca93488e85482/README.md#approach-a-downloading-through-tus-server
 [tus-ruby-server storages]: https://github.com/janko-m/tus-ruby-server#storage
 [tus-ruby-server expiration]: https://github.com/janko-m/tus-ruby-server#expiration
 [backgrounding]: http://shrinerb.com/rdoc/classes/Shrine/Plugins/Backgrounding.html
