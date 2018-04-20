@@ -35,7 +35,7 @@ document.querySelectorAll('input[type=file]').forEach(function (fileInput) {
     })
 
     var hiddenInput = document.getElementById(fileInput.dataset.uploadResultElement)
-    hiddenInput.value = uploadedFileData;
+    hiddenInput.value = uploadedFileData
 
     var videoLink = document.getElementById(fileInput.dataset.previewElement)
     videoLink.href = data.url

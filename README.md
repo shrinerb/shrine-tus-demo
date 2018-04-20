@@ -1,8 +1,9 @@
 # Shrine Tus Demo
 
-This is a Ruby demo app for the [tus resumable upload protocol], which
-integrates [tus-ruby-server] and [tus-js-client] with [Shrine] file attachment
-library using [shrine-tus].
+This is a Ruby demo app for integrating the [tus resumable upload protocol]
+with [Shrine]. It uses [Uppy] powered by [tus-js-client] for resumable uploads
+to a [tus-ruby-server], and attaches the uploaded file with the help of
+[shrine-tus].
 
 ## Setup
 
@@ -188,9 +189,10 @@ For various options regarding integrating Shrine and tus-ruby-server see the
 [shrine-tus] documentation.
 
 [tus resumable upload protocol]: http://tus.io
-[tus-ruby-server]: https://github.com/janko-m/tus-ruby-server
-[tus-js-client]: https://github.com/tus/tus-js-client
 [Shrine]: https://github.com/shrinerb/shrine
+[Uppy]: https://uppy.io
+[tus-js-client]: https://github.com/tus/tus-js-client
+[tus-ruby-server]: https://github.com/janko-m/tus-ruby-server
 [shrine-tus]: https://github.com/shrinerb/shrine-tus
 [Goliath]: https://github.com/postrank-labs/goliath
 [goliath-rack_proxy]: https://github.com/janko-m/goliath-rack_proxy
