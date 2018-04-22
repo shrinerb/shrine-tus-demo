@@ -25,6 +25,7 @@ First you'll need to add the necessary gems to your Gemfile:
 gem "shrine", "~> 2.0"     # File attachments
 gem "tus-server", "~> 1.0" # HTTP API for tus resumable upload protocol
 gem "shrine-tus", "~> 1.0" # Glue between Shrine and tus-server
+gem "http", "~> 3.2"       # Use HTTP.rb gem for downloading
 ```
 
 #### Standalone (Goliath)
@@ -108,7 +109,7 @@ require "shrine/storage/tus"
 Shrine.storages = {
   cache: Shrine::Storage::FileSystem.new("public", prefix: "uploads/cache"),
   store: Shrine::Storage::FileSystem.new("public", prefix: "uploads/store"),
-  tus:   Shrine::Storage::Tus.new,
+  tus:   Shrine::Storage::Tus.new(downloader: :http), # use HTTP.rb gem for downloading
 }
 ```
 

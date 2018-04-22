@@ -5,7 +5,7 @@ require "shrine/storage/tus"
 Shrine.storages = {
   cache: Shrine::Storage::FileSystem.new("public", prefix: "uploads/cache"),
   store: Shrine::Storage::FileSystem.new("public", prefix: "uploads/store"),
-  tus:   Shrine::Storage::Tus.new,
+  tus:   Shrine::Storage::Tus.new(downloader: :http),
 }
 
 Shrine.plugin :sequel

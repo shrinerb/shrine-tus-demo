@@ -5,6 +5,8 @@ GEM
       public_suffix (>= 2.0.2, < 4.0)
     async-rack (0.5.1)
       rack (~> 1.1)
+    domain_name (0.5.20180417)
+      unf (>= 0.0.5, < 1.0.0)
     down (4.2.0)
     einhorn (0.7.4)
     em-synchrony (1.0.6)
@@ -27,6 +29,14 @@ GEM
       rack-respond_to
     goliath-rack_proxy (1.0.0)
       goliath (>= 1.0.6, < 2)
+    http (3.2.0)
+      addressable (~> 2.3)
+      http-cookie (~> 1.0)
+      http-form_data (~> 2.0)
+      http_parser.rb (~> 0.6.0)
+    http-cookie (1.0.3)
+      domain_name (~> 0.5)
+    http-form_data (2.1.0)
     http_parser.rb (0.6.0)
     log4r (1.1.10)
     multi_json (1.12.2)
@@ -41,7 +51,7 @@ GEM
       rack-accept-media-types (>= 0.6)
     roda (3.3.0)
       rack
-    sequel (4.37.0)
+    sequel (5.7.1)
     shrine (2.8.0)
       down (~> 4.1)
     shrine-tus (1.1.0)
@@ -54,12 +64,16 @@ GEM
     tilt (2.0.5)
     tus-server (2.0.2)
       roda (>= 2.27, < 4)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.5)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   goliath-rack_proxy (~> 1.0)
+  http (~> 3.2)
   pg
   puma
   roda (~> 3.0)
@@ -70,4 +84,4 @@ DEPENDENCIES
   tus-server (>= 2.0.2, < 3)
 
 BUNDLED WITH
-   1.16.0
+   1.16.1
