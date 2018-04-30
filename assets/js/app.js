@@ -37,6 +37,8 @@ document.querySelectorAll('input[type=file]').forEach(function (fileInput) {
     var hiddenInput = document.getElementById(fileInput.dataset.uploadResultElement)
     hiddenInput.value = uploadedFileData
 
+    fileInput.parentNode.querySelector('.uppy-FileInput-input').value = ''
+
     var videoLink = document.getElementById(fileInput.dataset.previewElement)
     videoLink.href = data.url
     videoLink.innerHTML = data.url
