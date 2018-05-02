@@ -23,9 +23,8 @@ First you'll need to add the necessary gems to your Gemfile:
 ```rb
 # Gemfile
 gem "shrine", "~> 2.0"     # File attachments
-gem "tus-server", "~> 1.0" # HTTP API for tus resumable upload protocol
-gem "shrine-tus", "~> 1.0" # Glue between Shrine and tus-server
-gem "http", "~> 3.2"       # Use HTTP.rb gem for downloading
+gem "tus-server", "~> 2.0" # HTTP API for tus resumable upload protocol
+gem "shrine-tus", "~> 1.2" # Glue between Shrine and tus-server
 ```
 
 #### Standalone (Goliath)
@@ -33,7 +32,7 @@ gem "http", "~> 3.2"       # Use HTTP.rb gem for downloading
 In this demo the `tus-ruby-server` is run as a separate process, so that it
 can use the [Goliath] web server which has full streaming support. It uses
 Goliath via the [goliath-rack_proxy] gem, so if you want to use the same
-setup in your app you'll also need to add this gem to the Gemfile:
+setup in your app you'll also need to add it to the Gemfile.
 
 ```rb
 # Gemfile
@@ -78,17 +77,15 @@ In this case you just have to change the tus-js-client's `:endpoint` option from
 `localhost:9000` (Goliath setup) to `/files` in this demo.
 
 By default `tus-ruby-server` will save uploaded files to the `data/` directory
-on the disk. This will work because `tus-ruby-server` will be the one serving
-those files through its endpoint, so they don't need to be stored in the
-`public/` directory. However, you can still choose a different directory or
-even a different storage for `tus-ruby-server`, see the
+on the disk. However, you can still choose a different directory or even a
+different storage for `tus-ruby-server`, see the
 [documentation][tus-ruby-server storages] for more details.
 
 Note that the storage that `tus-ruby-server` uses will only be temporary; once
-the user uploads the file through `tus-ruby-server`, Shrine will take that file
-and re-upload it to the configured permanent storage. This separation allows
-you to easily [clear][tus-ruby-server expiration] unfinished or unattached
-uploads.
+the file is uploaded to `tus-ruby-server` and assigned as record's attachment,
+Shrine will take that file and re-upload it to the Shrine's permanent storage.
+This separation allows you to easily [clear][tus-ruby-server expiration]
+unfinished or unattached uploads.
 
 ### Configuring Shrine and shrine-tus
 
@@ -109,7 +106,7 @@ require "shrine/storage/tus"
 Shrine.storages = {
   cache: Shrine::Storage::FileSystem.new("public", prefix: "uploads/cache"),
   store: Shrine::Storage::FileSystem.new("public", prefix: "uploads/store"),
-  tus:   Shrine::Storage::Tus.new(downloader: :http), # use HTTP.rb gem for downloading
+  tus:   Shrine::Storage::Tus.new,
 }
 ```
 
@@ -141,8 +138,9 @@ end
 
 If you're familar with the flow for direct uploads in Shrine, integrating
 `tus-ruby-server` with Shrine is very similar; on the client side you use a
-specialized library for the tus.io resumable upload protocol, and there is more
-work on the server side. This is how it works on the high level:
+specialized library that talks the tus resumable upload protocol, and assign
+the uploaded file data instead of the raw file. This is how it works on the
+high level:
 
 1. tus client (`tus-js-client`) uploads a file to the tus server (`tus-ruby-server`)
 1. tus server returns the URL of the finished upload to the client
@@ -151,24 +149,24 @@ work on the server side. This is how it works on the high level:
 
 When the client finishes uploading the file to the tus server, it should send
 the uploaded file information to the server in the Shrine uploaded file JSON
-format, so that it can be attached to the record. This is how you can construct
-it using the `tus.Upload` JavaScript object from `tus-js-client`:
+format, so that it can be attached to the record.
 
-```js
-var fileData = JSON.stringify({
-  id: upload.url,
-  storage: "cache",
-  metadata: {
-    filename:  upload.file.name.match(/[^\/\\]+$/)[0], // IE returns full path
-    size:      upload.file.size,
-    mime_type: upload.file.type,
+```rb
+{
+  "id": "https://tus-server.com/a0099970b2228b936e2fb413dffb402d",
+  "storage": "cache",
+  "metadata": {
+    "filename": "nature.jpg",
+    "size": 1342347,
+    "mime_type": "image/jpeg"
   }
-});
+}
 ```
 
-Then you can either assign that to a hidden field and have it submitted when
-user clicks a button, or you can send it immediately to the app in an AJAX
-request.
+You can assign the uploaded file data to the hidden attachment field to be
+submitted with the form, or send it immediately to the app in an AJAX request.
+The only important thing is that the param name matches Shrine's attachment
+attribute name.
 
 ### Attachment
 
@@ -201,4 +199,4 @@ For various options regarding integrating Shrine and tus-ruby-server see the
 [tus-ruby-server storages]: https://github.com/janko-m/tus-ruby-server#storage
 [tus-ruby-server expiration]: https://github.com/janko-m/tus-ruby-server#expiration
 [backgrounding]: http://shrinerb.com/rdoc/classes/Shrine/Plugins/Backgrounding.html
-[processing]: http://shrinerb.com/rdoc/classes/Shrine/Plugins/Processing.html
+[processing]: https://shrinerb.com/rdoc/files/doc/processing_md.html

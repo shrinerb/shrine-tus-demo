@@ -7,7 +7,7 @@ GEM
       rack (~> 1.1)
     domain_name (0.5.20180417)
       unf (>= 0.0.5, < 1.0.0)
-    down (4.2.0)
+    down (4.4.0)
     einhorn (0.7.4)
     em-synchrony (1.0.6)
       eventmachine (>= 1.0.0.beta.1)
@@ -29,7 +29,7 @@ GEM
       rack-respond_to
     goliath-rack_proxy (1.0.0)
       goliath (>= 1.0.6, < 2)
-    http (3.2.0)
+    http (3.3.0)
       addressable (~> 2.3)
       http-cookie (~> 1.0)
       http-form_data (~> 2.0)
@@ -43,23 +43,24 @@ GEM
     pg (0.19.0)
     public_suffix (3.0.0)
     puma (3.6.0)
-    rack (1.6.8)
+    rack (1.6.10)
     rack-accept-media-types (0.9)
     rack-contrib (1.7.0)
       rack (~> 1.4)
     rack-respond_to (0.9.8)
       rack-accept-media-types (>= 0.6)
-    roda (3.3.0)
+    roda (3.7.0)
       rack
     sequel (5.7.1)
-    shrine (2.8.0)
+    shrine (2.11.0)
       down (~> 4.1)
-    shrine-tus (1.1.0)
+    shrine-tus (1.2.0)
       shrine (~> 2.0)
-      shrine-url (~> 1.0)
+      shrine-url (~> 2.0)
       tus-server (~> 2.0)
-    shrine-url (1.0.2)
-      down (~> 4.0)
+    shrine-url (2.1.0)
+      down (~> 4.4)
+      http (~> 3.2)
       shrine (>= 2.0)
     tilt (2.0.5)
     tus-server (2.0.2)
@@ -73,13 +74,12 @@ PLATFORMS
 
 DEPENDENCIES
   goliath-rack_proxy (~> 1.0)
-  http (~> 3.2)
   pg
   puma
   roda (~> 3.0)
   sequel
   shrine (~> 2.0)
-  shrine-tus (~> 1.1)
+  shrine-tus (~> 1.2)
   tilt
   tus-server (>= 2.0.2, < 3)
 
