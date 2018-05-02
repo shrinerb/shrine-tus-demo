@@ -21,9 +21,7 @@ document.querySelectorAll('input[type=file]').forEach(function (fileInput) {
 
   uppy.run()
 
-  uppy.on('upload-success', function(fileId, data) {
-    var file = uppy.getFile(fileId)
-
+  uppy.on('upload-success', function(file, data) {
     var uploadedFileData = JSON.stringify({
       id: data.url,
       storage: "cache",
