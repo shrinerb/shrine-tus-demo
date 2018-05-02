@@ -187,7 +187,7 @@ uploading to permanent storage.
 For various options regarding integrating Shrine and tus-ruby-server see the
 [shrine-tus] documentation.
 
-[tus resumable upload protocol]: http://tus.io
+[tus resumable upload protocol]: https://tus.io
 [Shrine]: https://github.com/shrinerb/shrine
 [Uppy]: https://uppy.io
 [tus-js-client]: https://github.com/tus/tus-js-client
@@ -198,5 +198,5 @@ For various options regarding integrating Shrine and tus-ruby-server see the
 [Approach A]: https://github.com/shrinerb/shrine-tus/blob/552a96ce4e065f6d95f4077441eca93488e85482/README.md#approach-a-downloading-through-tus-server
 [tus-ruby-server storages]: https://github.com/janko-m/tus-ruby-server#storage
 [tus-ruby-server expiration]: https://github.com/janko-m/tus-ruby-server#expiration
-[backgrounding]: http://shrinerb.com/rdoc/classes/Shrine/Plugins/Backgrounding.html
+[backgrounding]: https://shrinerb.com/rdoc/classes/Shrine/Plugins/Backgrounding.html
 [processing]: https://shrinerb.com/rdoc/files/doc/processing_md.html
