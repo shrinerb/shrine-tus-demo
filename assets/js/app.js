@@ -15,7 +15,7 @@ document.querySelectorAll('input[type=file]').forEach(function (fileInput) {
     .use(Uppy.Tus, {
       endpoint: 'http://localhost:9000/'
     })
-    .use(Uppy.ProgressBar, {
+    .use(Uppy.StatusBar, {
       target: fileInput.parentNode
     })
 
