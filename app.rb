@@ -1,5 +1,5 @@
 require "roda"
-require "tilt/erb"
+require "tus/server"
 
 require "./models/movie"
 
@@ -16,9 +16,16 @@ class ShrineTusDemo < Roda
 
   plugin :indifferent_params
 
+  # serve tus files through frontend server
+  use Rack::Sendfile
+
   route do |r|
     r.public # serve static assets
     r.assets # serve dynamic assets
+
+    r.on "files" do
+      r.run Tus::Server
+    end
 
     r.root do
       r.redirect "/movies"

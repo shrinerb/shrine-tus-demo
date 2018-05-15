@@ -8,11 +8,7 @@ to a [tus-ruby-server], and attaches the uploaded file with the help of
 ## Setup
 
 * Run `bundle install`
-* Run `gem install foreman`
-* Run `foreman start`
-
-This will start a Puma process which runs the main app (located in `app.rb`),
-and a [Goliath] process which runs the `tus-ruby-server` (located in `tus.rb`).
+* Run `bundle exec rackup`
 
 ## Guide
 
@@ -27,65 +23,19 @@ gem "tus-server", "~> 2.0" # HTTP API for tus resumable upload protocol
 gem "shrine-tus", "~> 1.2" # Glue between Shrine and tus-server
 ```
 
-#### Standalone (Goliath)
+In this demo we're running the tus server alongside our main application. The
+tus server is mounted on `/files`, so this has to be the value of the
+`:endpoint` option for the tus client.
 
-In this demo the `tus-ruby-server` is run as a separate process, so that it
-can use the [Goliath] web server which has full streaming support. It uses
-Goliath via the [goliath-rack_proxy] gem, so if you want to use the same
-setup in your app you'll also need to add it to the Gemfile.
+By default the tus server will save uploaded files to the `data/` directory on
+disk. However, you can still choose a different directory, or even a different
+storage; see the [documentation][tus-ruby-server storages] for more details.
 
-```rb
-# Gemfile
-# ...
-gem "goliath-rack_proxy", "~> 1.0"
-```
-```rb
-# tus.rb
-require "tus/server"
-require "goliath/rack_proxy"
-
-class TusApp < Goliath::RackProxy
-  rack_app Tus::Server
-  rewindable_input false # set to true if using checksums
-end
-```
-
-If you run that file via `ruby tus.rb`, it will start a Goliath server on
-`localhost:9000`, which you can later set as the `:endpoint` option for
-tus-js-client.
-
-#### Mounted
-
-You can also run `tus-ruby-server` alongside your main application, in the same
-way that you would run any other Rack application:
-
-```rb
-# config.ru (Rack)
-map "/files" do
-  run Tus::Server
-end
-
-# OR
-
-# config/routes.rb (Rails)
-Rails.application.routes.draw do
-  mount Tus::Server => "/files"
-end
-```
-
-In this case you just have to change the tus-js-client's `:endpoint` option from
-`localhost:9000` (Goliath setup) to `/files` in this demo.
-
-By default `tus-ruby-server` will save uploaded files to the `data/` directory
-on the disk. However, you can still choose a different directory or even a
-different storage for `tus-ruby-server`, see the
-[documentation][tus-ruby-server storages] for more details.
-
-Note that the storage that `tus-ruby-server` uses will only be temporary; once
-the file is uploaded to `tus-ruby-server` and assigned as record's attachment,
+Note that the storage that the tus server uses will only be temporary; once the
+file is uploaded to `tus-ruby-server` and assigned as record's attachment,
 Shrine will take that file and re-upload it to the Shrine's permanent storage.
-This separation allows you to easily [clear][tus-ruby-server expiration]
-unfinished or unattached uploads.
+This separation allows you to easily [clear unfinished or unattached
+uploads][tus-ruby-server expiration]
 
 ### Configuring Shrine and shrine-tus
 
@@ -153,7 +103,7 @@ format, so that it can be attached to the record.
 
 ```rb
 {
-  "id": "https://tus-server.com/a0099970b2228b936e2fb413dffb402d",
+  "id": "http://localhost:9292/files/a0099970b2228b936e2fb413dffb402d",
   "storage": "cache",
   "metadata": {
     "filename": "nature.jpg",
@@ -175,7 +125,7 @@ server side you can now assign this file data directly to the attachment
 attribute on the record.
 
 ```rb
-file_data #=> "{\"id\":\"http://localhost:9000/68db42638388ae645ab747b36a837a79\",\"storage\":\"cache\",\"metadata\":{...}}"
+file_data #=> "{\"id\":\"http://localhost:9292/files/68db42638388ae645ab747b36a837a79\",\"storage\":\"cache\",\"metadata\":{...}}"
 Movie.create(video: file_data)
 ```
 
@@ -193,8 +143,6 @@ For various options regarding integrating Shrine and tus-ruby-server see the
 [tus-js-client]: https://github.com/tus/tus-js-client
 [tus-ruby-server]: https://github.com/janko-m/tus-ruby-server
 [shrine-tus]: https://github.com/shrinerb/shrine-tus
-[Goliath]: https://github.com/postrank-labs/goliath
-[goliath-rack_proxy]: https://github.com/janko-m/goliath-rack_proxy
 [Approach A]: https://github.com/shrinerb/shrine-tus/blob/552a96ce4e065f6d95f4077441eca93488e85482/README.md#approach-a-downloading-through-tus-server
 [tus-ruby-server storages]: https://github.com/janko-m/tus-ruby-server#storage
 [tus-ruby-server expiration]: https://github.com/janko-m/tus-ruby-server#expiration

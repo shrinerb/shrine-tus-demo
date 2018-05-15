@@ -13,7 +13,7 @@ document.querySelectorAll('input[type=file]').forEach(function (fileInput) {
       allowMultipleFiles: fileInput.multiple
     })
     .use(Uppy.Tus, {
-      endpoint: 'http://localhost:9000/'
+      endpoint: '/files'
     })
     .use(Uppy.StatusBar, {
       target: fileInput.parentNode
