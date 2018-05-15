@@ -8,6 +8,7 @@ class ShrineTusDemo < Roda
 
   plugin :render
   plugin :partials
+  plugin :forme
 
   plugin :assets, js: "app.js", css: "app.css"
 

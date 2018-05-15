@@ -1,21 +1,16 @@
 <h2><%= movie.name || "New Movie" %></h2>
 
-<% action = movie.new? ? "/movies" : "movies/#{movie.id}" %>
-<% method = movie.new? ? "post"    : "put" %>
-
-<form action="<%= action %>" method="post" enctype="multipart/form-data">
-  <input type="hidden" name="_method" value="<%= method %>">
+<% form movie, { action: form_action, enctype: "multipart/form-data" }, labeler: :explicit do |f| %>
+  <%= f.input :hidden, name: "_method", value: form_method, obj: nil %> <%# # used in tandem with Rack::MethodOverride to enable PUT requests %>
   <div class="form-group">
-    <label for="movie-name">Name</label>
-    <input type="text" name="movie[name]" class="form-control" id="movie-name" placeholder="Name" value="<%= movie.name %>">
+    <%= f.input :name, class: "form-control" %>
   </div>
   <div class="form-group">
-    <label for="movie-video">Video</label>
-    <input type="hidden" name="movie[video]" value="<%= movie.cached_video_data %>" id="movie-video-upload-result">
-    <input type="file" name="movie[video]" id="movie-video-field" data-upload-result-element="movie-video-upload-result" data-preview-element="movie-video-preview">
+    <%= f.input :video, type: :hidden, value: movie.cached_video_data, id: "movie-video-upload-result", label: nil %>
+    <%= f.input :video, type: :file, id: "movie-video-field", data: { "upload-result-element": "movie-video-upload-result", "preview-element": "movie-video-preview" }, value: nil %>
   </div>
   <div class="video-preview">
     <a href="<%= movie.video_url %>" id="movie-video-preview"><%= movie.video_url(public: true) %></a>
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+  <%= f.button "Submit", class: "btn btn-primary" %>
+<% end %>

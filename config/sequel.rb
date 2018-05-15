@@ -12,3 +12,5 @@ DB.create_table! :movies do
   column :name, :varchar
   column :video_data, :text
 end
+
+Sequel::Model.plugin :forme

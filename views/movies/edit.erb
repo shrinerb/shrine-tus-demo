@@ -1,1 +1,1 @@
-<%= partial "movies/form", locals: {movie: @movie} %>
+<%= partial "movies/form", locals: { movie: @movie, form_method: "put", form_action: "/movies/#{@movie.id}" } %>

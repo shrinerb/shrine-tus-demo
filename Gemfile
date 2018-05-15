@@ -5,6 +5,7 @@ gem "puma"
 
 gem "tilt", ">= 2.0.8"
 gem "erubi"
+gem "forme"
 
 gem "sequel"
 gem "pg"
