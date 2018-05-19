@@ -9,14 +9,13 @@ document.querySelectorAll('input[type=file]').forEach(function (fileInput) {
 
   uppy = Uppy.Core({ id: fileInput.id })
     .use(Uppy.FileInput, {
-      target:             fileInput.parentNode,
-      allowMultipleFiles: fileInput.multiple
+      target: fileInput.parentNode,
     })
     .use(Uppy.Tus, {
-      endpoint: '/files'
+      endpoint: '/files',
     })
-    .use(Uppy.StatusBar, {
-      target: fileInput.parentNode
+    .use(Uppy.ProgressBar, {
+      target: fileInput.parentNode,
     })
 
   uppy.run()
@@ -34,8 +33,6 @@ document.querySelectorAll('input[type=file]').forEach(function (fileInput) {
 
     var hiddenInput = document.getElementById(fileInput.dataset.uploadResultElement)
     hiddenInput.value = uploadedFileData
-
-    fileInput.parentNode.querySelector('.uppy-FileInput-input').value = ''
 
     var videoLink = document.getElementById(fileInput.dataset.previewElement)
     videoLink.href = data.url
