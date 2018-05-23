@@ -13,6 +13,7 @@ document.querySelectorAll('input[type=file]').forEach(function (fileInput) {
     })
     .use(Uppy.Tus, {
       endpoint: '/files',
+      chunkSize: 5*1024*1024,
     })
     .use(Uppy.ProgressBar, {
       target: fileInput.parentNode,
