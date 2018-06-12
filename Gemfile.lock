@@ -7,7 +7,7 @@ GEM
       unf (>= 0.0.5, < 1.0.0)
     down (4.4.0)
     erubi (1.7.1)
-    forme (1.7.0)
+    forme (1.8.0)
     http (3.3.0)
       addressable (~> 2.3)
       http-cookie (~> 1.0)
@@ -46,7 +46,7 @@ PLATFORMS
 
 DEPENDENCIES
   erubi
-  forme
+  forme (~> 1.8)
   pg
   puma
   roda (~> 3.0)

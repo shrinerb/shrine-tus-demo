@@ -6,8 +6,8 @@
     <%= f.input :name, class: "form-control" %>
   </div>
   <div class="form-group">
-    <%= f.input :video, type: :hidden, value: movie.cached_video_data, id: "movie-video-upload-result", label: nil %>
-    <%= f.input :video, type: :file, id: "movie-video-field", data: { "upload-result-element": "movie-video-upload-result", "preview-element": "movie-video-preview" }, value: nil %>
+    <%= f.input :video, type: :hidden, value: movie.cached_video_data, id: "movie-video-upload-result" %>
+    <%= f.input :video, type: :file, id: "movie-video-field", data: { upload_result_element: "movie-video-upload-result", preview_element: "movie-video-preview" }, dasherize_data: true %>
   </div>
   <div class="video-preview">
     <a href="<%= movie.video_url %>" id="movie-video-preview"><%= movie.video_url(public: true) %></a>
