@@ -7,7 +7,10 @@
 document.querySelectorAll('input[type=file]').forEach(function (fileInput) {
   fileInput.style.display = 'none' // uppy will add its own file input
 
-  uppy = Uppy.Core({ id: fileInput.id })
+  uppy = Uppy.Core({
+      id: fileInput.id,
+      autoProceed: true,
+    })
     .use(Uppy.FileInput, {
       target: fileInput.parentNode,
     })
@@ -18,8 +21,6 @@ document.querySelectorAll('input[type=file]').forEach(function (fileInput) {
     .use(Uppy.ProgressBar, {
       target: fileInput.parentNode,
     })
-
-  uppy.run()
 
   uppy.on('upload-success', function(file, data) {
     var uploadedFileData = JSON.stringify({
