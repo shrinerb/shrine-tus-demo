@@ -20,6 +20,9 @@ class ShrineTusDemo < Roda
   # serve tus files through frontend server
   use Rack::Sendfile
 
+  # log requests
+  use Rack::CommonLogger
+
   route do |r|
     r.public # serve static assets
     r.assets # serve dynamic assets

@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 gem "roda", "~> 3.0"
-gem "puma"
+gem "falcon", ">= 0.18.14", "< 1"
 
 gem "tilt", ">= 2.0.8"
 gem "erubi"

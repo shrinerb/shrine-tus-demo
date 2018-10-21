@@ -3,12 +3,13 @@
 This is a Ruby demo app for integrating the [tus resumable upload protocol]
 with [Shrine]. It uses [Uppy] powered by [tus-js-client] for resumable uploads
 to a [tus-ruby-server], and attaches the uploaded file with the help of
-[shrine-tus].
+[shrine-tus]. The app runs on the [Falcon] web server, because tus-ruby-server
+benefits from Falcon's asynchronous streaming of requests and responses.
 
 ## Setup
 
 * Run `bundle install`
-* Run `bundle exec rackup`
+* Run `bundle exec falcon serve`
 
 ## Guide
 
@@ -143,6 +144,7 @@ For various options regarding integrating Shrine and tus-ruby-server see the
 [tus-js-client]: https://github.com/tus/tus-js-client
 [tus-ruby-server]: https://github.com/janko-m/tus-ruby-server
 [shrine-tus]: https://github.com/shrinerb/shrine-tus
+[Falcon]: https://github.com/socketry/falcon
 [Approach A]: https://github.com/shrinerb/shrine-tus/blob/552a96ce4e065f6d95f4077441eca93488e85482/README.md#approach-a-downloading-through-tus-server
 [tus-ruby-server storages]: https://github.com/janko-m/tus-ruby-server#storage
 [tus-ruby-server expiration]: https://github.com/janko-m/tus-ruby-server#expiration
