@@ -11,5 +11,5 @@ gem "sequel"
 gem "pg"
 
 gem "shrine", "~> 2.0"
-gem "tus-server", "~> 2.1"
+gem "tus-server", ">= 2.1.2", "< 3"
 gem "shrine-tus", "~> 1.2"
