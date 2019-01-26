@@ -1,11 +1,15 @@
 require "shrine"
 require "shrine/storage/file_system"
 require "shrine/storage/tus"
-require "down/http"
-require "localhost/authority"
 
-# use Falcon's self-signed SSL certificate for downloading tus files from localhost
-downloader = Down::Http.new(ssl_context: Localhost::Authority.fetch.client_context)
+# this is required if running on Falcon web server
+if defined?(Falcon)
+  require "down/http"
+  require "localhost/authority"
+
+  # use Falcon's self-signed SSL certificate for downloading tus files from localhost
+  downloader = Down::Http.new(ssl_context: Localhost::Authority.fetch.client_context)
+end
 
 Shrine.storages = {
   cache: Shrine::Storage::FileSystem.new("public", prefix: "uploads/cache"),
