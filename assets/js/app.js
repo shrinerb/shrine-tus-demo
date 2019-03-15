@@ -24,9 +24,9 @@ document.querySelectorAll('input[type=file]').forEach(function (fileInput) {
       target: fileInput.parentNode,
     })
 
-  uppy.on('upload-success', function(file, data) {
+  uppy.on('upload-success', function(file, response) {
     var uploadedFileData = JSON.stringify({
-      id: data.url,
+      id: response.uploadURL,
       storage: "cache",
       metadata: {
         filename:  file.name,
@@ -39,7 +39,7 @@ document.querySelectorAll('input[type=file]').forEach(function (fileInput) {
     hiddenInput.value = uploadedFileData
 
     var videoLink = document.getElementById(fileInput.dataset.previewElement)
-    videoLink.href = data.url
-    videoLink.innerHTML = data.url
+    videoLink.href = response.uploadURL
+    videoLink.innerHTML = response.uploadURL
   })
 })
