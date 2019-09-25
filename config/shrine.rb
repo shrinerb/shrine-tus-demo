@@ -1,6 +1,7 @@
 require "shrine"
 require "shrine/storage/file_system"
 require "shrine/storage/tus"
+require "dry-monitor"
 
 # this is required if running on Falcon web server
 if defined?(Falcon)
@@ -18,5 +19,6 @@ Shrine.storages = {
 }
 
 Shrine.plugin :sequel
-Shrine.plugin :logging
+Shrine.plugin :instrumentation, notifications: Dry::Monitor::Notifications.new(:test)
 Shrine.plugin :cached_attachment_data
+Shrine.plugin :restore_cached_data
